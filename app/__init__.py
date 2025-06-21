@@ -16,6 +16,19 @@ app = Flask(__name__)
 def index():
     return render_template('index.html', title="MLH Fellow", url=os.getenv("URL"))
 
+@app.route('/lucas/education')
+def lucas_education():
+    education = [
+        {
+            "school": "University of Waterloo",
+            "degree": "Software Engineering",
+            "start_date": "Sept. 2024",
+            "end_date": "Present"
+        }
+    ]
+
+    return env.get_template('education.html').render(title="Education", url=os.getenv("URL"), education=education, image_url="/static/img/lucas-picture.png")
+  
 @app.route('/lucas/work-experience')
 def lucas_work_experience():
     work_experience = [
