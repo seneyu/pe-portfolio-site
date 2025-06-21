@@ -103,5 +103,5 @@ def stephany_about():
 
     return render_template('about.html', 
                            title="About", url=os.getenv("URL"), 
-                           image_url="img/stephany-picture.JPG", 
+                           image_url="/static/img/stephany-picture.JPG", 
                            description=description)
