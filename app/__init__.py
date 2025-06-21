@@ -96,3 +96,7 @@ def lucas_about():
 @app.route('/lucas')
 def lucas():
     return render_template('lucas.html', title="Lucas", url=os.getenv("URL"))
+
+@app.route('/stephany')
+def stephany():
+    return render_template('stephany.html', title="Stephany", url=os.getenv("URL"))
