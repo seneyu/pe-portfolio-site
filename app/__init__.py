@@ -101,4 +101,7 @@ def lucas():
 def stephany_about():
     description = "Hi! I am Stephany and I am interested in creating dynamic, interactive user experiences. Outside of coding, I like practicing yoga, doing film photography, and anything art related!"
 
-    return render_template('about.html', title="About", url=os.getenv("URL"), image_url="img/stephany-picture.JPG", description=description)
+    return render_template('about.html', 
+                           title="About", url=os.getenv("URL"), 
+                           image_url="img/stephany-picture.JPG", 
+                           description=description)
