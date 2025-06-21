@@ -28,3 +28,7 @@ def lucas_education():
     ]
 
     return env.get_template('education.html').render(title="Education", url=os.getenv("URL"), education=education, image_url="/static/img/lucas-picture.png")
+
+@app.route('/lucas')
+def lucas():
+    return render_template('lucas.html', title="Lucas", url=os.getenv("URL"))
