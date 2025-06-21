@@ -12,4 +12,4 @@ def index():
 
 @app.route('/lucas')
 def lucas():
-    return env.get_template('lucas.html').render(title="Lucas", url=os.getenv("URL"))
+    return render_template('lucas.html', title="Lucas", url=os.getenv("URL"))
