@@ -31,3 +31,17 @@ def lucas_hobbies():
         },
     ]
     return env.get_template('hobbies.html').render(title="Hobbies", url=os.getenv("URL"), hobbies=hobbies, image_url="/static/img/lucas-picture.png")
+
+@app.route('/lucas/about')
+def lucas_about():
+    description = "Hey! My name is Lucas and I'm majoring in Software Engineering at Waterloo. Outside of coding, I love to play/watch basketball and other sports!"
+
+    return render_template('about.html',
+                           title="About",
+                           url=os.getenv("URL"),
+                           image_url="img/lucas-picture.png",
+                           description=description)
+
+@app.route('/lucas')
+def lucas():
+    return render_template('lucas.html', title="Lucas", url=os.getenv("URL"))
