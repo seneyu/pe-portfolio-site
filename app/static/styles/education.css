@@ -1,0 +1,35 @@
+.education {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.school {
+    background-color: white;
+    border-radius: 10px;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.school:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.school h3 {
+    color: #1d539f;
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0 0 10px 0;
+    font-family: "Roboto", serif;
+}
+
+.school p {
+    color: #666;
+    font-size: 16px;
+    margin: 0;
+    font-family: "Roboto", serif;
+    font-weight: 400;
+}
