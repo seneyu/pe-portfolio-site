@@ -19,3 +19,8 @@ def lucas_about():
                            url=os.getenv("URL"),
                            image_url="img/lucas-picture.png",
                            description=description)
+
+@app.route('/lucas')
+def lucas():
+    return render_template('lucas.html', title="Lucas", url=os.getenv("URL"))
+
