@@ -96,3 +96,23 @@ def lucas_about():
 @app.route('/lucas')
 def lucas():
     return render_template('lucas.html', title="Lucas", url=os.getenv("URL"))
+
+@app.route('/stephany/work-experience')
+def stephany_work_experience():
+    work_experience=[
+        {
+            "company": "Alki",
+            "title": "Software Engineer",
+            "start_date": "Nov 2024",
+            "end_date": "Present",
+            "description": "SaaS"
+        },
+        {
+            "company": "OSLabs",
+            "title": "Software Engineer",
+            "start_date": "Mar 2024",
+            "end_date": "Dec 2024",
+            "description": "Open Source"
+        },
+    ]
+    return env.get_template('work-experience.html').render(title="Work Experience", url=os.getenv("URL"), work_experience=work_experience, image_url="/static/img/stephany-picture.JPG")
