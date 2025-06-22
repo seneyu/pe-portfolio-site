@@ -116,3 +116,17 @@ def stephany_work_experience():
         },
     ]
     return env.get_template('work-experience.html').render(title="Work Experience", url=os.getenv("URL"), work_experience=work_experience, image_url="/img/stephany-picture.JPG")
+  
+@app.route('/stephany/about')
+def stephany_about():
+    description = "Hi! I am Stephany and I am interested in creating dynamic, interactive user experiences. Outside of coding, I like practicing yoga, doing film photography, and anything art related!"
+
+    return render_template('about.html', 
+                           title="About", url=os.getenv("URL"), 
+                           image_url="/img/stephany-picture.JPG", 
+                           description=description)
+  
+@app.route('/stephany')
+def stephany():
+    return render_template('stephany.html', title="Stephany", url=os.getenv("URL"))
+
