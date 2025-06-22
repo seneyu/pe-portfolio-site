@@ -21,7 +21,7 @@ def index():
 
 @app.route('/lucas/visited-places')
 def lucas_visited_places():
-    return render_template('visited-places.html', title="Visited Places", url=os.getenv("URL"), image_url="/static/img/lucas-picture.png", map_url="https://visitedplaces.com/embed/?map=world&projection=geoOrthographic&theme=dark-blue&water=1&graticule=0&names=1&duration=2000&placeduration=100&slider=0&autoplay=1&autozoom=none&autostep=1&home=CA&places=My%20Home~CA~1_0_0_96.5_-60.4*North%20America~US_PA_CU_DO~1.6_-100.6_44.4_100.6_-44.4*South%20America~BR~1.5_-65.9_-20.1_65.9_20.1*Europe~IT_FR_ES_PT~2.4_12.1_53.3_-12.1_-53.3")
+    return env.get_template('visited-places.html').render(title="Visited Places", url=os.getenv("URL"), image_url="/static/img/lucas-picture.png", map_url="https://visitedplaces.com/embed/?map=world&projection=geoOrthographic&theme=dark-blue&water=1&graticule=0&names=1&duration=2000&placeduration=100&slider=0&autoplay=1&autozoom=none&autostep=1&home=CA&places=My%20Home~CA~1_0_0_96.5_-60.4*North%20America~US_PA_CU_DO~1.6_-100.6_44.4_100.6_-44.4*South%20America~BR~1.5_-65.9_-20.1_65.9_20.1*Europe~IT_FR_ES_PT~2.4_12.1_53.3_-12.1_-53.3", name_url="/lucas", name="Lucas")
 
 @app.route('/lucas/education')
 def lucas_education():
@@ -34,7 +34,7 @@ def lucas_education():
         }
     ]
 
-    return env.get_template('education.html').render(title="Education", url=os.getenv("URL"), education=education, image_url="/static/img/lucas-picture.png")
+    return env.get_template('education.html').render(title="Education", url=os.getenv("URL"), education=education, image_url="/static/img/lucas-picture.png", name_url="/lucas", name="Lucas")
   
 @app.route('/lucas/work-experience')
 def lucas_work_experience():
@@ -68,7 +68,7 @@ def lucas_work_experience():
             "description": "Customer Analytics 📊"
         },
     ]
-    return env.get_template('work-experience.html').render(title="Work Experience", url=os.getenv("URL"), work_experience=work_experience, image_url="/static/img/lucas-picture.png")
+    return env.get_template('work-experience.html').render(title="Work Experience", url=os.getenv("URL"), work_experience=work_experience, image_url="/static/img/lucas-picture.png", name_url="/lucas", name="Lucas")
 
 @app.route('/lucas/hobbies')
 def lucas_hobbies():
@@ -84,7 +84,7 @@ def lucas_hobbies():
             "image_url": "/static/img/lucas-hackathon.jpeg"
         },
     ]
-    return env.get_template('hobbies.html').render(title="Hobbies", url=os.getenv("URL"), hobbies=hobbies, image_url="/static/img/lucas-picture.png")
+    return env.get_template('hobbies.html').render(title="Hobbies", name="Lucas", url=os.getenv("URL"), hobbies=hobbies, image_url="/static/img/lucas-picture.png", name_url="/lucas")
 
 @app.route('/lucas/about')
 def lucas_about():
@@ -93,12 +93,14 @@ def lucas_about():
     return render_template('about.html',
                            title="About",
                            url=os.getenv("URL"),
-                           image_url="img/lucas-picture.png",
-                           description=description)
+                           image_url="/static/img/lucas-picture.png",
+                           description=description,
+                           name_url="/lucas",
+                           name="Lucas")
 
 @app.route('/lucas')
 def lucas():
-    return render_template('lucas.html', title="Lucas", url=os.getenv("URL"))
+    return env.get_template('lucas.html').render(title="Lucas", url=os.getenv("URL"), image_url="/static/img/lucas-picture.png", name_url="/lucas", name="Lucas")
 
 @app.route('/stephany/visited-places')
 def stephany_visited_places():
