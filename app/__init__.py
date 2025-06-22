@@ -100,3 +100,63 @@ def lucas():
 @app.route('/stephany/visited-places')
 def stephany_visited_places():
     return render_template('visited-places.html', title="Visited Places", url=os.getenv("URL"), image_url="/static/img/stephany-picture.JPG", map_url="https://visitedplaces.com/view/?map=world&projection=geoEqualEarth&theme=dark-blue&water=1&graticule=0&names=1&duration=2000&placeduration=100&slider=0&autoplay=0&autozoom=none&autostep=1&home=HK&places=~HK.cc9f40*Asia~CN_JP_TH~1.9_75_30.8_-84.7_0*North%20America~US_CA~2.2_-97_41_85.3_0*Europe~GB_IT_FR_CH~3.1_21.3_47.1_-19_0")
+
+@app.route('/stephany/education')
+def stephany_education():
+    education = [
+        {
+            "school": "University of California, Davis",
+            "degree": "Bachelor of Science",
+        }
+    ]
+
+    return env.get_template('education.html').render(title="Education", url=os.getenv("URL"), education=education, image_url="/static/img/stephany-picture.JPG")
+
+@app.route('/stephany/hobbies')
+def stephany_hobbies():
+    hobbies=[
+        {
+            "name": "Performing Arts",
+            "description": "I love watching and exploring performing arts. I joined a beginner physical theater performance.",
+            "image_url": "/static/img/steph-hobby1.JPG"
+        },
+        {
+            "name": "Film Photography",
+            "description": "I like taking photos with film cameras. Here is me taking a selfie with my Olympus XA.",
+            "image_url": "/static/img/steph-hobby2.PNG"
+        }
+    ]
+    return env.get_template('hobbies.html').render(title="Hobbies", url=os.getenv("URL"), hobbies=hobbies, image_url="/static/img/stephany-picture.JPG")
+
+@app.route('/stephany/work-experience')
+def stephany_work_experience():
+    work_experience=[
+        {
+            "company": "Alki",
+            "title": "Software Engineer",
+            "start_date": "Nov 2024",
+            "end_date": "Present",
+            "description": "SaaS"
+        },
+        {
+            "company": "OSLabs",
+            "title": "Software Engineer",
+            "start_date": "Mar 2024",
+            "end_date": "Dec 2024",
+            "description": "Open Source"
+        },
+    ]
+    return env.get_template('work-experience.html').render(title="Work Experience", url=os.getenv("URL"), work_experience=work_experience, image_url="/static/img/stephany-picture.JPG")
+  
+@app.route('/stephany/about')
+def stephany_about():
+    description = "Hi! I am Stephany and I am interested in creating dynamic, interactive user experiences. Outside of coding, I like practicing yoga, doing film photography, and anything art related!"
+
+    return render_template('about.html', 
+                           title="About", url=os.getenv("URL"), 
+                           image_url="/img/stephany-picture.JPG", 
+                           description=description)
+  
+@app.route('/stephany')
+def stephany():
+    return render_template('stephany.html', title="Stephany", url=os.getenv("URL"))
