@@ -97,6 +97,17 @@ def lucas_about():
 def lucas():
     return render_template('lucas.html', title="Lucas", url=os.getenv("URL"))
 
+@app.route('/stephany/education')
+def stephany_education():
+    education = [
+        {
+            "school": "University of California, Davis",
+            "degree": "Bachelor of Science",
+        }
+    ]
+
+    return env.get_template('education.html').render(title="Education", url=os.getenv("URL"), education=education, image_url="/static/img/stephany-picture.JPG")
+
 @app.route('/stephany/hobbies')
 def stephany_hobbies():
     hobbies=[
@@ -145,3 +156,4 @@ def stephany_about():
 @app.route('/stephany')
 def stephany():
     return render_template('stephany.html', title="Stephany", url=os.getenv("URL"))
+
