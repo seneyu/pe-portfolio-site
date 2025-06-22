@@ -115,4 +115,4 @@ def stephany_work_experience():
             "description": "Open Source"
         },
     ]
-    return env.get_template('work-experience.html').render(title="Work Experience", url=os.getenv("URL"), work_experience=work_experience, image_url="/static/img/stephany-picture.JPG")
+    return env.get_template('work-experience.html').render(title="Work Experience", url=os.getenv("URL"), work_experience=work_experience, image_url="/img/stephany-picture.JPG")
