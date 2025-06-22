@@ -29,6 +29,11 @@
           </div>
         </a>
       </div>
+      <nav>
+        {% for name, url in names.items() %}
+          <a href="{{ url }}">{{ name }}</a>
+        {% endfor %}
+      </nav>
     </header>
 
     <div class="profile">
