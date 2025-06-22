@@ -97,6 +97,22 @@ def lucas_about():
 def lucas():
     return render_template('lucas.html', title="Lucas", url=os.getenv("URL"))
 
+@app.route('/stephany/hobbies')
+def stephany_hobbies():
+    hobbies=[
+        {
+            "name": "Performing Arts",
+            "description": "I love watching and exploring performing arts. I joined a beginner physical theater performance.",
+            "image_url": "/static/img/steph-hobby1.JPG"
+        },
+        {
+            "name": "Film Photography",
+            "description": "I like taking photos with film cameras. Here is me taking a selfie with my Olympus XA.",
+            "image_url": "/static/img/steph-hobby2.PNG"
+        }
+    ]
+    return env.get_template('hobbies.html').render(title="Hobbies", url=os.getenv("URL"), hobbies=hobbies, image_url="/static/img/stephany-picture.JPG")
+
 @app.route('/stephany/work-experience')
 def stephany_work_experience():
     work_experience=[
@@ -115,7 +131,7 @@ def stephany_work_experience():
             "description": "Open Source"
         },
     ]
-    return env.get_template('work-experience.html').render(title="Work Experience", url=os.getenv("URL"), work_experience=work_experience, image_url="/img/stephany-picture.JPG")
+    return env.get_template('work-experience.html').render(title="Work Experience", url=os.getenv("URL"), work_experience=work_experience, image_url="/static/img/stephany-picture.JPG")
   
 @app.route('/stephany/about')
 def stephany_about():
@@ -129,4 +145,3 @@ def stephany_about():
 @app.route('/stephany')
 def stephany():
     return render_template('stephany.html', title="Stephany", url=os.getenv("URL"))
-
