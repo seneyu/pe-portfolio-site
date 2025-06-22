@@ -97,6 +97,10 @@ def lucas_about():
 def lucas():
     return render_template('lucas.html', title="Lucas", url=os.getenv("URL"))
 
+@app.route('/stephany/visited-places')
+def stephany_visited_places():
+    return render_template('visited-places.html', title="Visited Places", url=os.getenv("URL"), image_url="/static/img/stephany-picture.JPG", map_url="https://visitedplaces.com/view/?map=world&projection=geoEqualEarth&theme=dark-blue&water=1&graticule=0&names=1&duration=2000&placeduration=100&slider=0&autoplay=0&autozoom=none&autostep=1&home=HK&places=~HK.cc9f40*Asia~CN_JP_TH~1.9_75_30.8_-84.7_0*North%20America~US_CA~2.2_-97_41_85.3_0*Europe~GB_IT_FR_CH~3.1_21.3_47.1_-19_0")
+
 @app.route('/stephany/education')
 def stephany_education():
     education = [
@@ -156,4 +160,3 @@ def stephany_about():
 @app.route('/stephany')
 def stephany():
     return render_template('stephany.html', title="Stephany", url=os.getenv("URL"))
-
