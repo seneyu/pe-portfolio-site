@@ -14,7 +14,10 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template('index.html', title="MLH Fellow", url=os.getenv("URL"))
+    return render_template('index.html', title="MLH Fellow Portfolios", url=os.getenv("URL"), names={
+        "Lucas": "/lucas",
+        "Stephany": "/stephany"
+    })
 
 @app.route('/lucas/visited-places')
 def lucas_visited_places():
