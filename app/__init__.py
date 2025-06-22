@@ -105,3 +105,7 @@ def stephany_about():
                            title="About", url=os.getenv("URL"), 
                            image_url="/static/img/stephany-picture.JPG", 
                            description=description)
+  
+@app.route('/stephany')
+def stephany():
+    return render_template('stephany.html', title="Stephany", url=os.getenv("URL"))
