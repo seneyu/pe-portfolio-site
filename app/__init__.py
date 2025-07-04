@@ -167,4 +167,4 @@ def stephany_about():
   
 @app.route('/stephany')
 def stephany():
-    return env.get_template('layout.html').render(title="Home", url=os.getenv("URL"), image_url="static/img/stephany-picture.jpg", name_url="/stephany", name="Stephany")
+    return env.get_template('stephany.html').render(title="Stephany", url=os.getenv("URL"), image_url="static/img/stephany-picture.jpg", name_url="/stephany", name="Stephany")
