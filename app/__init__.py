@@ -55,7 +55,7 @@ def lucas_work_experience():
             "title": "Website Manager and Developer",
             "start_date": "May 2023",
             "end_date": "Sept. 2023",
-            "description": "Tutoring Platform 📚"
+            "description": "Online tutoring 📚"
         },
         {
             "company": "GoalLine Solutions",
