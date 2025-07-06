@@ -139,16 +139,16 @@ def stephany_work_experience():
         {
             "company": "Alki",
             "title": "Software Engineer",
-            "start_date": "Nov 2024",
+            "start_date": "Dec 2024",
             "end_date": "Present",
-            "description": "SaaS"
+            "description": "A SaaS platform that uses spaced repetition to help users learn LeetCode"
         },
         {
             "company": "OSLabs",
             "title": "Software Engineer",
             "start_date": "Mar 2024",
             "end_date": "Dec 2024",
-            "description": "Open Source"
+            "description": "MLflow.js - An open source JS library streamlining ML lifecycle management in web environments"
         },
     ]
     return env.get_template('work-experience.html').render(title="Work Experience", url=os.getenv("URL"), work_experience=work_experience, image_url="/static/img/stephany-picture.JPG", name_url="/stephany", name="Stephany")
