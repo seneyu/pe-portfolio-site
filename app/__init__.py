@@ -2,6 +2,7 @@ import os
 from flask import Flask, render_template, request
 from dotenv import load_dotenv
 from jinja2 import Environment, PackageLoader, select_autoescape
+from peewee import *
 
 env = Environment(
     loader=PackageLoader("app"),
@@ -11,6 +12,14 @@ env = Environment(
 load_dotenv()
 app = Flask(__name__)
 
+mydb = MySQLDatabase(os.getenv("MYSQL_DATABASE"),
+                     user=os.getenv("MYSQL_USER"),
+                    password=os.getenv("MYSQL_PASSWORD"),
+                    host=os.getenv("MYSQL_HOST"),
+                    port=3306
+                    )
+
+print(mydb)
 
 @app.route('/')
 def index():
@@ -148,7 +157,7 @@ def stephany_work_experience():
             "title": "Software Engineer",
             "start_date": "Mar 2024",
             "end_date": "Dec 2024",
-            "description": "MLflow.js - An open source JS library streamlining ML lifecycle management in web environments"
+            "description": "MLflow.js - An open source JS client library streamlining ML lifecycle management in web environments"
         },
     ]
     return env.get_template('work-experience.html').render(title="Work Experience", url=os.getenv("URL"), work_experience=work_experience, image_url="/static/img/stephany-picture.JPG", name_url="/stephany", name="Stephany")
