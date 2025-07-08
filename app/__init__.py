@@ -3,6 +3,8 @@ from flask import Flask, render_template, request
 from dotenv import load_dotenv
 from jinja2 import Environment, PackageLoader, select_autoescape
 from peewee import *
+import datetime 
+from playhouse.shortcuts import model_to_dict
 
 env = Environment(
     loader=PackageLoader("app"),
@@ -12,6 +14,7 @@ env = Environment(
 load_dotenv()
 app = Flask(__name__)
 
+# connect to database using MySQLDatabase function from peewee
 mydb = MySQLDatabase(os.getenv("MYSQL_DATABASE"),
                      user=os.getenv("MYSQL_USER"),
                     password=os.getenv("MYSQL_PASSWORD"),
@@ -20,6 +23,19 @@ mydb = MySQLDatabase(os.getenv("MYSQL_DATABASE"),
                     )
 
 print(mydb)
+
+# define class TimelinePost, add peewee model
+class TimelinePost(Model):
+    name = CharField()
+    email = CharField()
+    content = TextField()
+    created_at = DateTimeField(default=datetime.datetime.now)
+
+    class Meta:
+        database = mydb
+
+mydb.connect()
+mydb.create_tables([TimelinePost])
 
 @app.route('/')
 def index():
@@ -177,3 +193,22 @@ def stephany_about():
 @app.route('/stephany')
 def stephany():
     return env.get_template('stephany.html').render(title="Stephany", url=os.getenv("URL"), image_url="/static/img/stephany-picture.JPG", name_url="/stephany", name="Stephany")
+
+# POST /api/timeline_post
+@app.route('/api/timeline_post', methods=['POST'])
+def post_time_line_post():
+    name = request.form['name']
+    email = request.form['email']
+    content = request.form['content']
+    timeline_post = TimelinePost.create(name=name, email=email, content=content)
+    return model_to_dict(timeline_post)
+
+# GET /api/timeline_post
+@app.route('/api/timeline_post', methods=['GET'])
+def get_time_line_post():
+    return {
+        'timeline_post': [
+            model_to_dict(p)
+            for p in TimelinePost.select().order_by(TimelinePost.created_at.desc())
+            ]
+    }
