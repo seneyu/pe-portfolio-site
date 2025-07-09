@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Timeline Posts</title>
+  </head>
+  <body>
+    <p>Timeline Posts</p>
+    <form action="/api/timeline_post" method="POST" id="timeline-form">
+      <label for="name">
+        Name: <input type="text" name="name" value="" id="name" /> </label
+      ><br />
+      <label for="email"
+        >Email: <input type="email" name="email" value="" id="email" /> </label
+      ><br />
+      <label for="content"
+        >Content:
+        <input type="text" name="content" value="" id="content" /> </label
+      ><br />
+      <button type="submit">Submit</button>
+    </form>
+    <div id="posts"></div>
+    <script>
+      const postsDiv = document.getElementById('posts');
+      postsDiv.innerHTML = '';
+
+      // fetch and display existing posts
+      async function fetchPosts() {
+        const response = await fetch('/api/timeline_post');
+        const data = await response.json();
+
+        data.timeline_post.forEach((post) => {
+          const div = document.createElement('div');
+          div.innerHTML = `<p>${post.name}, ${post.email}, ${post.content}</p>`;
+
+          postsDiv.appendChild(div);
+        });
+      }
+
+      // render a post
+      function renderPost(post) {
+        const div = document.createElement('div');
+        div.innerHTML = `<p>${post.name}, ${post.email}, ${post.content}</p>`;
+        return div;
+      }
+
+      // handle form submission
+      const form = document.getElementById('timeline-form');
+
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        const formData = new FormData(form);
+
+        const response = await fetch('/api/timeline_post', {
+          method: 'POST',
+          body: formData,
+        });
+
+        const post = await response.json();
+
+        // add new post to top
+        postsDiv.insertBefore(renderPost(post), postsDiv.firstChild);
+
+        form.reset();
+      });
+
+      fetchPosts();
+    </script>
+  </body>
+</html>

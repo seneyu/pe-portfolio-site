@@ -11,7 +11,10 @@ env = Environment(
     autoescape=select_autoescape()
 )
 
+# load env variables
 load_dotenv()
+
+# create flask app instance
 app = Flask(__name__)
 
 # connect to database using MySQLDatabase function from peewee
@@ -34,6 +37,7 @@ class TimelinePost(Model):
     class Meta:
         database = mydb
 
+# connect to database and create tables
 mydb.connect()
 mydb.create_tables([TimelinePost])
 
@@ -222,3 +226,7 @@ def delete_time_line_post(post_id):
         return {"message": "Post deleted"}, 200
     else:
         return {"message": "Post not found"}, 404
+
+@app.route('/timeline')
+def timeline():
+    return render_template('timeline.html', title="Timeline")
