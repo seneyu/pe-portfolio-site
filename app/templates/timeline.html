@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Timeline Posts</title>
+    <script src="https://cdn.jsdelivr.net/npm/js-sha256@0.9.0/build/sha256.min.js"></script>
   </head>
   <body>
     <p>Timeline Posts</p>
@@ -26,26 +27,14 @@
       postsDiv.innerHTML = '';
 
       // SHA256 hashing foor Gravatar
-      async function getSHA256Hash(email) {
+      function getSHA256Hash(email) {
         // normalize the email
-        const textAsBuffer = new TextEncoder().encode(
-          email.trim().toLowerCase()
-        );
-        // hash the normalized email using browser's Web Crypto API (SHA-256), returns an ArrayBuffer
-        const hashBuffer = await crypto.subtle.digest('SHA-256', textAsBuffer);
-        // convert the ArrayBuffer to a byte array (Unit8Array)
-        const hashArray = Array.from(new Uint8Array(hashBuffer));
-        // convert each byte to a two-character hexadecimal string
-        // join to form the full SHA-256 hext string
-        const hash = hashArray
-          .map((b) => b.toString(16).padStart(2, '0'))
-          .join('');
-        return hash;
+        return sha256(email.trim().toLowerCase());
       }
 
       // render a post with Gravatar
-      async function renderPost(post) {
-        const hash = await getSHA256Hash(post.email);
+      function renderPost(post) {
+        const hash = getSHA256Hash(post.email);
         const gravatarUrl = `https://gravatar.com/avatar/${hash}?s=64&d=identicon`;
 
         const div = document.createElement('div');
@@ -61,7 +50,7 @@
 
         postsDiv.innerHTML = '';
         for (const post of data.timeline_post) {
-          postsDiv.appendChild(await renderPost(post));
+          postsDiv.appendChild(renderPost(post));
         }
       }
 
@@ -77,7 +66,7 @@
         const post = await response.json();
 
         // add new post to top
-        const postDiv = await renderPost(post);
+        const postDiv = renderPost(post);
         postsDiv.insertBefore(postDiv, postsDiv.firstChild);
 
         form.reset();
