@@ -50,7 +50,7 @@
 
         const div = document.createElement('div');
         div.innerHTML = `<img src="${gravatarUrl}" alt="Profile" width="40" height="40"/>
-        <strong>${post.name}</strong> (${post.email}): ${post.content}`;
+        <strong>${post.name}</strong> (${post.email}): ${post.content} - ${post.created_at}`;
         return div;
       }
 
