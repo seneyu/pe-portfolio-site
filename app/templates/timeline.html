@@ -25,43 +25,60 @@
       const postsDiv = document.getElementById('posts');
       postsDiv.innerHTML = '';
 
+      // SHA256 hashing foor Gravatar
+      async function getSHA256Hash(email) {
+        // normalize the email
+        const textAsBuffer = new TextEncoder().encode(
+          email.trim().toLowerCase()
+        );
+        // hash the normalized email using browser's Web Crypto API (SHA-256), returns an ArrayBuffer
+        const hashBuffer = await crypto.subtle.digest('SHA-256', textAsBuffer);
+        // convert the ArrayBuffer to a byte array (Unit8Array)
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        // convert each byte to a two-character hexadecimal string
+        // join to form the full SHA-256 hext string
+        const hash = hashArray
+          .map((b) => b.toString(16).padStart(2, '0'))
+          .join('');
+        return hash;
+      }
+
+      // render a post with Gravatar
+      async function renderPost(post) {
+        const hash = await getSHA256Hash(post.email);
+        const gravatarUrl = `https://gravatar.com/avatar/${hash}?s=64&d=identicon`;
+
+        const div = document.createElement('div');
+        div.innerHTML = `<img src="${gravatarUrl}" alt="Profile" width="40" height="40"/>
+        <strong>${post.name}</strong> (${post.email}): ${post.content}`;
+        return div;
+      }
+
       // fetch and display existing posts
       async function fetchPosts() {
         const response = await fetch('/api/timeline_post');
         const data = await response.json();
 
-        data.timeline_post.forEach((post) => {
-          const div = document.createElement('div');
-          div.innerHTML = `<p>${post.name}, ${post.email}, ${post.content}</p>`;
-
-          postsDiv.appendChild(div);
-        });
-      }
-
-      // render a post
-      function renderPost(post) {
-        const div = document.createElement('div');
-        div.innerHTML = `<p>${post.name}, ${post.email}, ${post.content}</p>`;
-        return div;
+        postsDiv.innerHTML = '';
+        for (const post of data.timeline_post) {
+          postsDiv.appendChild(await renderPost(post));
+        }
       }
 
       // handle form submission
       const form = document.getElementById('timeline-form');
-
       form.addEventListener('submit', async function (e) {
         e.preventDefault();
-
         const formData = new FormData(form);
-
         const response = await fetch('/api/timeline_post', {
           method: 'POST',
           body: formData,
         });
-
         const post = await response.json();
 
         // add new post to top
-        postsDiv.insertBefore(renderPost(post), postsDiv.firstChild);
+        const postDiv = await renderPost(post);
+        postsDiv.insertBefore(postDiv, postsDiv.firstChild);
 
         form.reset();
       });
