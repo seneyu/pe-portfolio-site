@@ -1,4 +1,4 @@
-# #!/bin/bash
+#!/bin/bash
 
 # create a post and get the ID
 POST_RESPONSE=$(curl -s -X POST http://127.0.0.1:5000/api/timeline_post -d 'name=Random&email=random@email.com&content=This is a random message.')
