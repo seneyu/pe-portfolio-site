@@ -1,7 +1,10 @@
 import os
 from flask import Flask, render_template, request
+import datetime
 from dotenv import load_dotenv
 from jinja2 import Environment, PackageLoader, select_autoescape
+from peewee import CharField, DateTimeField, Model, MySQLDatabase, TextField
+from playhouse.shortcuts import model_to_dict
 
 env = Environment(
     loader=PackageLoader("app"),
@@ -10,6 +13,24 @@ env = Environment(
 
 load_dotenv()
 app = Flask(__name__)
+
+mydb = MySQLDatabase(os.getenv("MYSQL_DATABASE"),
+                     user=os.getenv("MYSQL_USER"),
+                     password=os.getenv("MYSQL_PASSWORD"),
+                     host=os.getenv("MYSQL_HOST"),
+                     port=3306)
+
+class TimelinePost(Model):
+    name = CharField()
+    email = CharField()
+    content = TextField()
+    created_at = DateTimeField(default=datetime.datetime.now)
+
+    class Meta:
+        database = mydb
+
+mydb.connect()
+mydb.create_tables([TimelinePost])
 
 
 @app.route('/')
@@ -168,3 +189,26 @@ def stephany_about():
 @app.route('/stephany')
 def stephany():
     return env.get_template('layout.html').render(title="Home", url=os.getenv("URL"), image_url="static/img/stephany-picture.jpg", name_url="/stephany", name="Stephany")
+
+@app.route('/api/timeline_post', methods=['POST'])
+def post_timeline_post():
+    name = request.form['name']
+    email = request.form['email']
+    content = request.form['content']
+    timeline_post = TimelinePost.create(name=name, email=email, content=content)
+
+    return model_to_dict(timeline_post)
+
+@app.route('/api/timeline_post')
+def get_timeline_post():
+    return {
+        "timeline_posts": [
+            model_to_dict(p) for p in TimelinePost.select().order_by(TimelinePost.created_at.desc())
+        ]
+    }
+
+@app.route('/api/timeline_post', methods=['DELETE'])
+def delete_timeline_post():
+    id = request.form['id']
+    
+    return model_to_dict(TimelinePost.delete_by_id(id))
