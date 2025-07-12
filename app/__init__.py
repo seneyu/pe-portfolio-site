@@ -119,6 +119,12 @@ def lucas_about():
                            name_url="/lucas",
                            name="Lucas")
 
+@app.route('/lucas/timeline')
+def lucas_timeline():
+    posts = TimelinePost.select().order_by(TimelinePost.created_at.desc())
+
+    return env.get_template('timeline.html').render(title="Timeline", url=os.getenv("URL"), image_url="/static/img/lucas-picture.png", name_url="/lucas", name="Lucas", posts=posts)
+
 @app.route('/lucas')
 def lucas():
     return env.get_template('lucas.html').render(title="Lucas", url=os.getenv("URL"), image_url="/static/img/lucas-picture.png", name_url="/lucas", name="Lucas")
