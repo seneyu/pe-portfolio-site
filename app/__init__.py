@@ -216,5 +216,8 @@ def get_timeline_post():
 @app.route('/api/timeline_post', methods=['DELETE'])
 def delete_timeline_post():
     id = request.form['id']
-    
-    return model_to_dict(TimelinePost.delete_by_id(id))
+    deleted = TimelinePost.delete_by_id(id)
+    if deleted:
+        return {"deleted": id}
+    else:
+        return {"error": "Not found"}, 404
