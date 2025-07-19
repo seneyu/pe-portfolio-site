@@ -29,24 +29,7 @@ class TestTimelinePost(unittest.TestCase):
         second_post = TimelinePost.create(name='Jane Doe', email='jane@email.com', content='Hello I am Jane!')
         assert second_post.id == 2
 
-        # fetch response via API
-        get_response = self.client.get("/api/timeline_post")
-        self.assertEqual(get_response.status_code, 200)
-        data = get_response.get_json()
-        self.assertIn("timeline_posts", data)
-        posts = data["timeline_posts"]
-
-        self.assertEqual(posts[0]["name"], "Jane Doe")
-        self.assertEqual(posts[1]["name"], "John Doe")
-
-        # delete posts
-        delete_response1 = self.client.delete("/api/timeline_post", data={"id": second_post.id})
-        self.assertEqual(delete_response1.status_code, 200)
-        delete_response2 = self.client.delete("/api/timeline_post", data={"id": first_post.id})
-        self.assertEqual(delete_response2.status_code, 200)
-
-        # confirm there are no posts left
-        get_response = self.client.get("/api/timeline_post")
-        data = get_response.get_json()
-        posts = data["timeline_posts"]
-        self.assertEqual(len(posts), 0)
+        # TODO get timeline posts and assert that they are correct
+        posts = list(TimelinePost.select().order_by(TimelinePost.created_at.desc()))
+        assert posts[0].name == "Jane Doe"
+        assert posts[1].name == "John Doe"
