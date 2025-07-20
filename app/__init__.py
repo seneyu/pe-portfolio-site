@@ -37,9 +37,10 @@ class TimelinePost(Model):
     class Meta:
         database = mydb
 
-# connect to database and create tables
-mydb.connect()
-mydb.create_tables([TimelinePost])
+# Only initialize database if we're not in a testing environment
+if os.getenv('FLASK_ENV') != 'testing':
+    mydb.connect()
+    mydb.create_tables([TimelinePost])
 
 @app.route('/')
 def index():
