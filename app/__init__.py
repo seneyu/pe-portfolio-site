@@ -5,6 +5,7 @@ from jinja2 import Environment, PackageLoader, select_autoescape
 from peewee import *
 import datetime 
 from playhouse.shortcuts import model_to_dict
+import re
 
 env = Environment(
     loader=PackageLoader("app"),
@@ -205,9 +206,19 @@ def stephany():
 # POST /api/timeline_post
 @app.route('/api/timeline_post', methods=['POST'])
 def post_time_line_post():
-    name = request.form['name']
-    email = request.form['email']
-    content = request.form['content']
+    name = request.form.get('name')
+    email = request.form.get('email')
+    content = request.form.get('content')
+
+    if not name:
+        return "<!DOCTYPE html><html><body><h1>Invalid name</h1></body></html>", 400
+    if not email:
+        return "<!DOCTYPE html><html><body><h1>Invalid email</h1></body></html>", 400
+    if not content:
+        return "<!DOCTYPE html><html><body><h1>Invalid content</h1></body></html>", 400
+    if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+        return "<!DOCTYPE html><html><body><h1>Invalid email</h1></body></html>", 400
+
     timeline_post = TimelinePost.create(name=name, email=email, content=content)
     return model_to_dict(timeline_post)
 
