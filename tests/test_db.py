@@ -3,7 +3,7 @@ import unittest
 from peewee import *
 
 # Set testing environment before importing app
-os.environ['FLASK_ENV'] = 'testing'
+os.environ['USING_TEST_DB'] = 'true'
 
 from app import TimelinePost
 
