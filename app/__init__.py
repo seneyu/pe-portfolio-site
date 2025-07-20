@@ -5,6 +5,7 @@ from jinja2 import Environment, PackageLoader, select_autoescape
 from peewee import *
 import datetime 
 from playhouse.shortcuts import model_to_dict
+import re
 
 env = Environment(
     loader=PackageLoader("app"),
@@ -18,12 +19,15 @@ load_dotenv()
 app = Flask(__name__)
 
 # connect to database using MySQLDatabase function from peewee
-mydb = MySQLDatabase(os.getenv("MYSQL_DATABASE"),
-                     user=os.getenv("MYSQL_USER"),
-                    password=os.getenv("MYSQL_PASSWORD"),
-                    host=os.getenv("MYSQL_HOST"),
-                    port=3306
-                    )
+if os.getenv("TESTING") == "true":
+    print("Running in test mode")
+    mydb = SqliteDatabase("file:memory?mode=memory&cache=shared", uri=True)
+else:
+    mydb = MySQLDatabase(os.getenv("MYSQL_DATABASE"),
+                         user=os.getenv("MYSQL_USER"),
+                         password=os.getenv("MYSQL_PASSWORD"),
+                         host=os.getenv("MYSQL_HOST"),
+                         port=3306)
 
 print(mydb)
 
@@ -37,9 +41,10 @@ class TimelinePost(Model):
     class Meta:
         database = mydb
 
-# connect to database and create tables
-mydb.connect()
-mydb.create_tables([TimelinePost])
+# Only initialize database if we're not in a testing environment
+if os.getenv('USING_TEST_DB') != 'true':
+    mydb.connect()
+    mydb.create_tables([TimelinePost])
 
 @app.route('/')
 def index():
@@ -201,9 +206,19 @@ def stephany():
 # POST /api/timeline_post
 @app.route('/api/timeline_post', methods=['POST'])
 def post_time_line_post():
-    name = request.form['name']
-    email = request.form['email']
-    content = request.form['content']
+    name = request.form.get('name')
+    email = request.form.get('email')
+    content = request.form.get('content')
+
+    if not name:
+        return "<!DOCTYPE html><html><body><h1>Invalid name</h1></body></html>", 400
+    if not email:
+        return "<!DOCTYPE html><html><body><h1>Invalid email</h1></body></html>", 400
+    if not content:
+        return "<!DOCTYPE html><html><body><h1>Invalid content</h1></body></html>", 400
+    if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+        return "<!DOCTYPE html><html><body><h1>Invalid email</h1></body></html>", 400
+
     timeline_post = TimelinePost.create(name=name, email=email, content=content)
     return model_to_dict(timeline_post)
 
