@@ -189,7 +189,7 @@ def stephany_work_experience():
 
 @app.route('/stephany/about')
 def stephany_about():
-    description = "Hi! I am Stephany and I am interested in creating dynamic, interactive user experiences. Outside of coding, I like practicing yoga, doing film photography, and anything art related!"
+    description = "Hello! I am Stephany and I am interested in creating dynamic, interactive user experiences. Outside of coding, I like practicing yoga, doing film photography, and anything art related!"
 
     return render_template('about.html', 
                            title="About", 

@@ -3,7 +3,6 @@
 cd pe-portfolio-site
 git fetch && git reset origin/main --hard
 
-source python3-virtualenv/bin/activate
-pip install -r requirements.txt
-
-systemctl restart myportfolio
+# spin containers down to prevent out of memory issues on our VPS instances when building the next step
+docker compose -f docker-compose.prod.yml down
+docker compose -f docker-compose.prod.yml up -d --build
