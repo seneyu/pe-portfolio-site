@@ -24,7 +24,6 @@ services:
     restart: always
     environment:
       - CERTBOT_EMAIL=lucaskamadakim@gmail.com
-      - STAGING=1
     ports:
       - 80:80
       - 443:443
