@@ -56,6 +56,12 @@ def lucas_education():
             "degree": "Software Engineering",
             "start_date": "Sept. 2024",
             "end_date": "Present"
+        },
+        {
+            "school": "Marc Garneau Collegiate Institute",
+            "degree": "TOPS Program",
+            "start_date": "Sept. 2020",
+            "end_date": "June 2024"
         }
     ]
 
