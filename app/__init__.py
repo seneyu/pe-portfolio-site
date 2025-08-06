@@ -242,6 +242,7 @@ def delete_time_line_post(post_id):
     else:
         return {"message": "Post not found"}, 404
 
-@app.route('/timeline')
+@app.route('/stephany/timeline')
 def timeline():
-    return render_template('timeline.html', title="Timeline")
+    return env.get_template('timeline.html').render(title="Timeline Posts", url=os.getenv("URL"), image_url="/static/img/stephany-picture.JPG", name_url="/stephany", name="Stephany")
+

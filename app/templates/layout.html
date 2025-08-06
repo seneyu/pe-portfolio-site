@@ -1,53 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta property="og:title" content="Personal Portfolio" />
+    <meta property="og:description" content="My Personal Portfolio" />
+    <meta property="og:url" content="{{ url }}" />
 
-<head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta property="og:title" content="Personal Portfolio">
-  <meta property="og:description" content="My Personal Portfolio">
-  <meta property="og:url" content="{{ url }}">
-
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
       href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
-      rel="stylesheet">
+      rel="stylesheet" />
 
-  <link lang='sass' rel="stylesheet" href="/static/styles/main.css">
-  {% block styles %}
-  {% endblock %}
-  <link rel='icon' href='/static/img/favicon.ico' type='image/x-icon' />
-  <title>{{ name }} - {{ title }}</title>
-</head>
+    <link lang="sass" rel="stylesheet" href="/static/styles/main.css" />
+    {% block styles %} {% endblock %}
+    <link rel="icon" href="/static/img/favicon.ico" type="image/x-icon" />
+    <title>{{ name }} - {{ title }}</title>
+  </head>
 
-<body>
+  <body>
+    <header class="nav-bar">
+      <div class="nav-content">
+        <a href="/">
+          <div class="nav-logo">
+            <img src="/static/img/logo.svg" />
+          </div>
+        </a>
+      </div>
+      <nav>
+        <a href="{{ name_url }}/about">About</a>
+        <a href="{{ name_url }}/work-experience">Work Experience</a>
+        <a href="{{ name_url }}/hobbies">Hobbies</a>
+        <a href="{{ name_url }}/education">Education</a>
+        <a href="{{ name_url }}/visited-places">Visited Places</a>
+        <a href="{{ name_url }}/timeline">Timeline Posts</a>
+      </nav>
+    </header>
 
-  <header class="nav-bar">
-    <div class="nav-content">
-      <a href="/">
-        <div class="nav-logo">
-          <img src="/static/img/logo.svg" />
-        </div>
-      </a>
+    <div class="profile">
+      <div id="profile-picture" class="profile-picture">
+        <img src="{{ image_url }}" />
+      </div>
+      <h1>{{ name }} - {{ title }}</h1>
     </div>
-    <nav>
-      <a href="{{ name_url }}/about">About</a>
-      <a href="{{ name_url }}/work-experience">Work Experience</a>
-      <a href="{{ name_url }}/hobbies">Hobbies</a>
-      <a href="{{ name_url }}/education">Education</a>
-      <a href="{{ name_url }}/visited-places">Visited Places</a>
-    </nav>
-  </header>
 
-  <div class="profile">
-    <div id="profile-picture" class="profile-picture">
-      <img src="{{ image_url }}">
-    </div>
-    <h1>{{ name }} - {{ title }}</h1>
-  </div>
-
-  {% block content %}
-  {% endblock %}
-</body>
+    {% block content %} {% endblock %}
+  </body>
 </html>
