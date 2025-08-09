@@ -38,3 +38,12 @@ jobs:
 
       - name: Send Discord Notification
         run: curl -s -X POST "${{ secrets.DISCORD_WEBHOOK }}" -d "content=🚀 Deployment Successful"
+
+  notify_on_failure:
+    runs-on: ubuntu-latest
+    needs: deploy
+    if: always()
+    steps:
+      - name: Send Failure Notification
+        if: ${{ needs.deploy.result == 'failure' }}
+        run: curl -s -X POST "${{ secrets.DISCORD_WEBHOOK }}" -d "content=🚨 Deployment Failed"
